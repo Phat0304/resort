@@ -1,0 +1,181 @@
+.hidden {
+    display: none;
+}
+
+#dashboard-menu {
+    position: fixed;
+    height: 100% !important;
+}
+
+/* ----------------------------------------------------------------------------- */
+#side_nav {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    min-width: 250px;
+    height: 100vh !important;
+    background-color: #343a40;
+    transition: all 0.4s;
+    z-index: 999;
+}
+
+.nav-bottom {
+    width: 100%;
+    height: 55px;
+}
+
+.visit-site {
+    background-color: #6f82b7;
+    text-decoration: none;
+    color: #fff !important;
+}
+
+.content {
+    min-height: 100vh;
+    width: 100%;
+}
+
+hr.h-color {
+    background-color: #eee;
+}
+
+.sidebar li.active:not(.nav-collapse ul li) {
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+.sidebar li:hover:not(.active, .nav-collapse, .nav-collapse li) {
+    background-color: #292525;
+    border-radius: 8px;
+}
+
+.caret-icon {
+    transition-duration: .3s;
+    transform: rotate(90deg);
+}
+
+.caret-icon.active {
+    transform: rotate(0deg);
+}
+
+.sidebar .nav-collapse li.active {
+    background-color: #292525;
+    border-radius: 0 8px 8px 0;
+    border-left: 5px solid #eee;
+    pointer-events: none;
+    color: white !important;
+}
+
+.sidebar .nav-collapse li:hover:not(.active) {
+    border-left: 5px solid #eee;
+    border-radius: 0 8px 8px 0;
+    background-color: #292525;
+}
+
+.sidebar .nav-collapse li:not(.active) {
+    border-left: 5px solid #292525;
+}
+
+.sidebar .nav-collapse li a,
+.sidebar .nav-collapse li.active a {
+    color: white !important;
+}
+
+.sidebar li.active a,
+.sidebar li.active a:hover {
+    color: #000;
+}
+
+.sidebar li a {
+    color: #fff;
+}
+
+.nav-bg {
+    background-color: #dfdfdf;
+}
+
+.profile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    transition-duration: 0.3s;
+}
+
+.profile:hover .frofile-card {
+    display: block !important;
+}
+
+.profile:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.profile div.frofile-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 40px;
+    right: 38px;
+    width: 200px;
+    height: 100px;
+    transition: opacity 0.5s;
+    display: none;
+    z-index: 10;
+}
+
+.frofile-card:hover {
+    display: block !important;
+}
+
+div.frofile-card .details .img {
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+div.frofile-card .details p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 0.7rem;
+}
+
+div.frofile-card .details .email {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 0.7rem;
+    text-align: center;
+    word-break: break-all;
+}
+
+div.frofile-card .action {
+    border-radius: 0 0 0.25rem 0.25rem;
+    font-size: 12px;
+    line-height: 0;
+}
+
+div.frofile-card .action span {
+    letter-spacing: 1px;
+}
+
+@media (max-width: 767px) {
+    #side_nav {
+        margin-left: -250px;
+        position: fixed;
+        min-height: 100vh;
+        z-index: 999;
+    }
+
+    #side_nav.active {
+        margin-left: 0;
+    }
+}
