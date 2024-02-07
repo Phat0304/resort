@@ -13,9 +13,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-12 mb-lg-0 mb-4 px-lg-rounded">
-                
+
                 <div class="container-fluid flex-lg-column bg-white shadow py-2 rounded">
-                    <h4 class="mt-2">ตัวกรอง</h4>
+                    <h4 class="mt-2">เลือกวันที่เข้าพัก</h4>
                     <form onsubmit="return searchrooms(event)" id="form-search">
                         <div class="border bg-light p-3 rounded mb-3">
                             <label class="form-label" style="font-weight: 500;">เช็คอิน</label>
@@ -25,7 +25,7 @@
                             <input type="date" class="form-control shadow-none pointer" name="checkout"
                                 id="date-checkout" required>
                         </div>
-                        
+
                         <div class="border bg-light p-3 rounded mb-3">
                             <h5 class="mb-3" style="font-size: 18px;">จำนวนผู้เข้าพัก</h5>
                             <div class="d-flex">
@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                       
+
 
                         <div class="w-100 d-flex justify-content-center align-items-center">
                             <div class="d-none">
@@ -129,8 +129,8 @@
                             <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                                 <h6 class="mb-4">฿ {{ $room->price }} / วัน</h6>
 
-                                <button onclick="book({{ $room->id }})"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                <button onclick="book({{ $room->id }})" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
                                     class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">จองห้อง</button>
                                 <button onclick="roomDetails({{ $room->id }})"
                                     class="btn btn-sm w-100 btn-outline-dark shadow-none">ดูรายละเอียด</button>
@@ -141,19 +141,6 @@
             </div>
         </div>
     </div>
-
-
-  
-
-
-
-
-
-
-
-
-
-
 @endsection
 
 @section('scripts')

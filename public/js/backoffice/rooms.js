@@ -190,26 +190,44 @@ function updateRoom(event) {
 }
 
 function deleteRoom(_id) {
-
-
-    axios.delete(`/admin/deleteroom/${_id}`).then((response) => {
-        if (response.status === 200) {
-            Swal.fire({
-                icon: "success",
-                title: "ลบห้องสำเร็จ",
-            }).then(() => window.location.reload());
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "ลบห้องไม่สำเร็จ",
-            }).then(() => window.location.reload());
+    Swal.fire({
+        text: "คุณต้องการลบใช่หรือไม่",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ยืนยัน",
+        cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .delete(`/admin/deleteroom/${_id}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "ลบห้องสำเร็จ",
+                        }).then(() => {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        });
+                    }
+                })
+                .catch((err) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Someting went wrong!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                });
         }
     });
 }
 
-
 async function getGallery(_id) {
-    const response = await axios.get(`admin/gallery/${_id}`)
+    const response = await axios.get(`admin/gallery/${_id}`);
     const room = response.data.data.room;
     const gallery = response.data.data.gallery;
 
@@ -217,26 +235,33 @@ async function getGallery(_id) {
     room_id_edit.value = room.id;
 
     let html = "";
-    gallery.forEach(gal => {
+    gallery.forEach((gal) => {
         html += `<tr id="gal-image">
                     <td style="width:250px;">
                         <img src="${gal.image}" width=200 height=115 >
                     </td>
                     <td class="text-center align-middle">
                         <div class="form-check form-switch d-flex align-items-center justify-content-center">
-                            <input onchange="updateGalDefault(${gal.id}, this.checked, this)" galid="${gal.id}" class="form-check-input image-checked shadow-none" ${gal.default?"checked":""}
+                            <input onchange="updateGalDefault(${
+                                gal.id
+                            }, this.checked, this)" galid="${
+            gal.id
+        }" class="form-check-input image-checked shadow-none" ${
+            gal.default ? "checked" : ""
+        }
                                 type="checkbox"id="image-toggle" style="cursor: pointer;">
                         </div>
                     </td>
                     <td class="text-center align-middle">
-                        <button type="button" onclick="deleteGal(this, ${gal.id})" class="btn btn-danger shadow-none"><i
+                        <button type="button" onclick="deleteGal(this, ${
+                            gal.id
+                        })" class="btn btn-danger shadow-none"><i
                             class="bi bi-trash-fill"></i></button>
                     </td>
                 </tr> `;
-    })
+    });
 
     tbody.innerHTML = html;
-
 }
 
 function addImage(event) {
@@ -249,7 +274,7 @@ function addImage(event) {
         .post("/admin/room/addimage", formData)
         .then(({ data }) => {
             toastr.success("เพิ่มรูปภาพสำเร็จ");
-            preview_img.src = '/images/rooms/thumbnail.jpg';
+            preview_img.src = "/images/rooms/thumbnail.jpg";
             img_input.value = "";
             const gal = data.data;
             let html = `
@@ -259,12 +284,20 @@ function addImage(event) {
                             </td>
                             <td class="text-center align-middle">
                                 <div class="form-check form-switch d-flex align-items-center justify-content-center">
-                                    <input onchange="updateGalDefault(${gal.id}, this.checked, this)" galid="${gal.id}" class="form-check-input image-checked shadow-none" ${gal.default?"checked":""}
+                                    <input onchange="updateGalDefault(${
+                                        gal.id
+                                    }, this.checked, this)" galid="${
+                gal.id
+            }" class="form-check-input image-checked shadow-none" ${
+                gal.default ? "checked" : ""
+            }
                                         type="checkbox"id="image-toggle" style="cursor: pointer;">
                                 </div>
                             </td>
                             <td class="text-center align-middle">
-                                <button type="button" onclick="deleteGal(this, ${gal.id})" class="btn btn-danger shadow-none"><i
+                                <button type="button" onclick="deleteGal(this, ${
+                                    gal.id
+                                })" class="btn btn-danger shadow-none"><i
                                     class="bi bi-trash-fill"></i></button>
                             </td>
                         </tr>
@@ -273,7 +306,7 @@ function addImage(event) {
             tbody.insertAdjacentHTML("beforeend", html);
         })
         .catch((err) => {
-            preview_img.src = '/images/rooms/thumbnail.jpg';
+            preview_img.src = "/images/rooms/thumbnail.jpg";
             img_input.value = "";
             close_modal.forEach((btn) => btn.click());
             toastr.error("Error");
@@ -318,8 +351,8 @@ function onDelete(_el, _id, _url) {
 }
 
 function updateGalDefault(_id, _checked, _el) {
-    const gal = document.querySelectorAll('#gal-image');
-    const galList = document.querySelectorAll('#image-toggle')
+    const gal = document.querySelectorAll("#gal-image");
+    const galList = document.querySelectorAll("#image-toggle");
     const room_id = room_id_edit.value;
     if (_checked) {
         axios
@@ -329,16 +362,18 @@ function updateGalDefault(_id, _checked, _el) {
             })
             .then(({ data }) => {
                 if (data.status) {
-                    galList.forEach(g => {
-                        if (parseInt(g.getAttribute('galid')) === parseInt(_id)) {
+                    galList.forEach((g) => {
+                        if (
+                            parseInt(g.getAttribute("galid")) === parseInt(_id)
+                        ) {
                             g.checked = true;
                         } else {
                             g.checked = false;
                         }
-                    })
+                    });
                 }
-        })
-        .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
     } else {
         axios
             .patch(`/admin/updategaldefault/${_id}`, {
@@ -349,8 +384,8 @@ function updateGalDefault(_id, _checked, _el) {
                 if (data.status) {
                     //
                 }
-        })
-        .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
     }
 }
 
@@ -368,6 +403,6 @@ function closeModal() {
         feature.classList.remove("border", "border-danger", "p-2")
     );
 
-    preview_img.src = '/images/rooms/thumbnail.jpg';
+    preview_img.src = "/images/rooms/thumbnail.jpg";
     img_input.value = "";
 }

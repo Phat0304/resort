@@ -23,13 +23,10 @@
                         placeholder="Password" required>
                 </div>
 
-                <div>
-                    
-                    <div class="g-recaptcha" data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6"></div>
-                </div>
+
 
                 <button name="btn_login" type="submit" class="btn text-white custom-bg btn_login shadow-none">
-                    <span class="spinner spinner-border spinner-border-sm hidden" aria-hidden="true"></span>   เข้าสู่ระบบ
+                    <span class="spinner spinner-border spinner-border-sm hidden" aria-hidden="true"></span> เข้าสู่ระบบ
                 </button>
             </div>
         </form>
@@ -64,10 +61,10 @@
                 const message = document.querySelector('.invalid')
                 if (err.response.status === 403) {
                     message.innerText = "บัญชีนี้ถูกปิดใช้งาน";
-                } else if (err.response.status === 404 ){
+                } else if (err.response.status === 404) {
                     message.innerText = "กรุณาตรวจสอบ reCaptcha";
-                }  else {
-                
+                } else {
+
                     message.innerText = "Username หรือ Password ไม่ถูกต้อง";
                 }
                 btn_login.removeAttribute('disabled')

@@ -15,8 +15,7 @@
                     class="d-inline-block mb-2 text-dark text-decoration-none">สิ่งอำนวยความสะดวก</a>
                 <a href="{{ route('contactus') }}"
                     class="d-inline-block mb-2 text-dark text-decoration-none">ติดต่อเรา</a>
-                <a href="{{ route('about') }}"
-                    class="d-inline-block mb-2 text-dark text-decoration-none">เกี่ยวกับเรา</a>
+
             </div>
         </div>
         <div class="col-lg-4 p-4">

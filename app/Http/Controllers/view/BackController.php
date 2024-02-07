@@ -14,10 +14,13 @@ use App\Models\Feature;
 use App\Models\LeaveMessage;
 use App\Models\Room;
 use App\Models\Settings;
+use App\Models\TempBooking;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class BackController extends Controller
 {
@@ -217,8 +220,12 @@ class BackController extends Controller
                         ]);
                     }
 
+                    $now = Carbon::now();
+                    $tempLimit = $now->subMinutes(16);
+                    $tempBooking = TempBooking::where('created_at', '>', $tempLimit)->get();
+
                     $rooms = Room::where(['display' => 1])->orderBy('price', 'ASC')->get();
-                    $roomAvailable = $rooms;
+                    $roomAvailable = [];
 
                     foreach ($rooms as $room) {
                         $fea_ids = explode(', ', $room->feature_ids);
@@ -231,6 +238,10 @@ class BackController extends Controller
                         $room->features = $features;
                         $room->facs = $facs;
                         $room->gallery = $gallery;
+
+                        if (count($room->gallery) !== 0) {
+                            $roomAvailable[] = $room;
+                        }
                     }
 
                     if (!$validator->fails()) {
@@ -256,7 +267,7 @@ class BackController extends Controller
 
                         if (count($bookings) > 0) {
                             foreach ($bookings as $book_key => $book_value) {
-                                foreach ($rooms as $room_key => $room_value) {
+                                foreach ($roomAvailable as $room_key => $room_value) {
                                     if (($room_value->id === $book_value->room_id) || ($room_value->adult < $request->adult || $room_value->children < $request->children)) {
                                         unset($roomAvailable[$room_key]);
                                     }
@@ -266,6 +277,30 @@ class BackController extends Controller
                             foreach ($rooms as $room_key => $room_value) {
                                 if (($room_value->adult < $request->adult || $room_value->children < $request->children)) {
                                     unset($roomAvailable[$room_key]);
+                                }
+                            }
+                        }
+
+                        if (count($tempBooking) > 0) { // temp booking
+                            $roomTemp_ids = [];
+
+                            foreach ($tempBooking as $temp) {
+                                $current_date = $request->checkin;
+                                for ($i = 0; $i < $diff_date; $i++) {
+                                    if (Str::contains($temp->booking_date, $current_date)) { // เปรียบเทียบ String
+                                        $roomTemp_ids[] = $temp->room_id;
+                                    }
+                                    $current_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+                                }
+                            }
+
+                            if (count($roomTemp_ids) > 0) {
+                                foreach ($roomTemp_ids as $id_key => $id) {
+                                    foreach ($roomAvailable as $room_key => $room_value) {
+                                        if ($id === $room_value->id) {
+                                            unset($roomAvailable[$room_key]);
+                                        }
+                                    }
                                 }
                             }
                         }

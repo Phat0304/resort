@@ -177,9 +177,10 @@
                                         มีคนจองไปแล้วเมื่อสักครู่หากคุณชำระเงินไปแล้วกรุณา<span><a
                                                 href="#">ติดต่อเจ้าหน้าที่</a></span>เพื่อขอรับเงินคืน</h6>
 
-                                                <div class="col-8 col-md-12 mb-4">
-                                                    <div class="g-recaptcha" style="transform: scale(0.8);" data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6"></div>
-                                                </div>
+                                    <div class="col-8 col-md-12 mb-4">
+                                        <div class="g-recaptcha" style="transform: scale(0.8);"
+                                            data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6"></div>
+                                    </div>
 
 
                                     <div class="col-8 col-md-8 mb-4 rounded">
@@ -307,17 +308,16 @@
 
             //รับค่า card_id มา
             const card_id = document.querySelector('input[name="card_id"]').value;
-            
 
-            if(card_id.length >= 13) {
+
+            if (card_id.length >= 13) {
 
                 const four_id = card_id.slice(-4); //เอาเลข 4 ตัวท้ายมา
 
                 // ใส่ค่า four_id ลงใน <input> ที่มี name เป็น "four_id"
                 document.querySelector('input[name="four_id"]').value = four_id;
 
-            }
-            else {
+            } else {
                 console.log("ความยาวของ card_id ต้องไม่น้อยกว่า 13 ตัว");
                 alert("เลขบัตรประชาชนไม่ถูกต้อง");
                 document.querySelector('input[name="card_id"]').value = ''; // เคลียร์ค่าใน input

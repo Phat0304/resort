@@ -8,6 +8,7 @@ use App\Models\TempBooking;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -126,6 +127,44 @@ class Controller extends BaseController
         if (session()->has('temp_id')) {
             TempBooking::where('temp_id', session('temp_id'))->delete();
             session()->forget('temp_id');
+        }
+    }
+
+    /* Private Function */
+    public function createTempBooking(Request $request)
+    {
+        // session()->forget('temp_id');
+
+        if (!session()->has('temp_id')) {
+            $temp_id = 'Temp-' . str_shuffle(time()); // random temp_id
+
+            // หาจำนวนคืนที่เข้าพัก
+            $start_date = $request->checkin;
+            $end_date = $request->checkout;
+            $secondsDiff = strtotime($end_date) - strtotime($start_date);
+            $diff_date = $secondsDiff / (60 * 60 * 24);
+
+            $current_date = $request->checkin;
+            $booking_date = "";
+            for ($i = 0; $i < $diff_date; $i++) {
+                $booking_date .= "," . date('Y-m-d', strtotime($current_date));
+                $current_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+            }
+
+            // dd(session('temp_id'));
+            $TempBooking = new TempBooking();
+            $TempBooking->temp_id = $temp_id;
+            $TempBooking->room_id = $request->id;
+            $TempBooking->ip_address = $request->ip();
+            $TempBooking->date_checkin = date('Y-m-d', strtotime($request->checkin));
+            $TempBooking->date_checkout = date('Y-m-d', strtotime($request->checkout));
+            $TempBooking->booking_date = $booking_date;
+            $TempBooking->days = $diff_date;
+            $TempBooking->booking_type = 'Online';
+            $TempBooking->save();
+
+            session(['temp_id' => $temp_id]);
+            session()->put('tempId_timeout', now()->addMinutes(20));
         }
     }
 }

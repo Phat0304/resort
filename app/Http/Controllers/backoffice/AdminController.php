@@ -58,53 +58,50 @@ class AdminController extends Controller
     }
 
     public function signIn(Request $request)
-{
-    // ตรวจสอบความถูกต้องของข้อมูลแบบฟอร์ม
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
-        'password' => 'required',
-        'g-recaptcha-response' => 'required|captcha', // เพิ่มตรวจสอบ reCAPTCHA response
-    ]);
+    {
+        // ตรวจสอบความถูกต้องของข้อมูลแบบฟอร์ม
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
 
-    if ($validator->fails() || empty($request->input('g-recaptcha-response'))) {
-        // เงื่อนไขที่เพิ่มขึ้น: ถ้าไม่ได้กด reCAPTCHA หรือ reCAPTCHA response ว่างเปล่า
-        return response([
-            'message' => 'error',
-            'status' => false,
-            'errorMessage' => 'reCAPTCHA',
-        ], 404);
+        ]);
+
+        if ($validator->fails()) {
+            // เงื่อนไขที่เพิ่มขึ้น: ถ้าไม่ได้กด reCAPTCHA หรือ reCAPTCHA response ว่างเปล่า
+            return response([
+                'message' => 'error',
+                'status' => false,
+
+            ], 404);
+        }
+
+        $adminUser = Admin::where(['email' => $request->email])->first();
+
+        if ($adminUser->status === "ปิดใช้งาน") {
+            return response([
+                'message' => 'error',
+                'status' => false,
+                'errorMessage' => 'Forbidden',
+            ], 403);
+        }
+
+        // ทำการตรวจสอบการลงชื่อเข้าใช้ด้วย reCAPTCHA
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::guard('admin')->user();
+            return response([
+                'message' => 'success',
+                'status' => true,
+                'description' => 'Sign-In Successfully!',
+                'user_name' => $user,
+            ], 200);
+        } else {
+            return response([
+                'message' => 'error',
+                'status' => false,
+                'description' => 'Authorization failed!',
+            ], 401);
+        }
     }
-
-
-    $adminUser = Admin::where(['email' => $request->email])->first();
-
-    if ($adminUser->status === "ปิดใช้งาน") {
-        return response([
-            'message' => 'error',
-            'status' => false,
-            'errorMessage' => 'Forbidden',
-        ], 403);
-    }
-
-   
-
-    // ทำการตรวจสอบการลงชื่อเข้าใช้ด้วย reCAPTCHA
-    if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-        $user = Auth::guard('admin')->user();
-        return response([
-            'message' => 'success',
-            'status' => true,
-            'description' => 'Sign-In Successfully!',
-            'user_name' => $user,
-        ], 200);
-    } else {
-        return response([
-            'message' => 'error',
-            'status' => false,
-            'description' => 'Authorization failed!',
-        ], 401);
-    }
-}
 
     public function onLogout(Request $request)
     {

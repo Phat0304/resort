@@ -27,6 +27,7 @@ class FrontController extends Controller
         $carousel = Carousel::where(['display' => 1])->orderBy('priority', 'ASC')->get()->all();
 
         $rooms = Room::where(['display' => 1])->orderBy('price', 'ASC')->limit(3)->get();
+        $roomAvailable = [];
 
         foreach ($rooms as $room) {
             $fea_ids = explode(', ', $room->feature_ids); // "1,2,3,4" => [1,2,3,4]
@@ -41,12 +42,16 @@ class FrontController extends Controller
             $room->features = $features;
             $room->facs = $facs;
             $room->gallery = $gallery;
+
+            if ($gallery->count() > 0) {
+                $roomAvailable[] = $room;
+            }
         }
 
         return view('frontoffice.home', [
             'slide_img' => $carousel,
             'facilities' => $facilities,
-            'rooms' => $rooms,
+            'rooms' => $roomAvailable,
             'contactUs' => $contactUs,
             'temp_id' => session('temp_id'),
         ]);
@@ -62,12 +67,6 @@ class FrontController extends Controller
             'temp_id' => session('temp_id'),
 
         ]);
-    }
-
-    public function aboutPage(Request $request)
-    {
-        $this->removeTempBooking();
-        return view('frontoffice.about');
     }
 
     public function contactPage(Request $request)
@@ -100,17 +99,21 @@ class FrontController extends Controller
             return view('frontoffice.rooms', [
                 'rooms' => [],
                 'temp_id' => session('temp_id'),
+
             ]);
         }
 
         $now = Carbon::now();
         $tempLimit = $now->subMinutes(16);
 
-        $tempBooking = TempBooking::where('created_at', '>', $tempLimit)->get(); // temp booking ที่ล็อกไว้ให้ชำละเงิน
+        $tempBooking = TempBooking::where('created_at', '>', $tempLimit)->get();
+
         $rooms = Room::where(['display' => 1])->orderBy('price', 'ASC')->get();
-        $roomAvailable = $rooms;
+        $roomAvailable = [];
+        // $roomAvailable = [];
 
         foreach ($rooms as $room) {
+
             $fea_ids = explode(', ', $room->feature_ids);
             $fac_ids = explode(', ', $room->fac_ids);
 
@@ -121,6 +124,11 @@ class FrontController extends Controller
             $room->features = $features;
             $room->facs = $facs;
             $room->gallery = $gallery;
+
+            if (count($room->gallery) !== 0) {
+                $roomAvailable[] = $room;
+            }
+
         }
 
         if (!$validator->fails()) {
@@ -146,7 +154,7 @@ class FrontController extends Controller
 
             if (count($bookings) > 0) {
                 foreach ($bookings as $book_key => $book_value) {
-                    foreach ($rooms as $room_key => $room_value) {
+                    foreach ($roomAvailable as $room_key => $room_value) {
                         if (($room_value->id === $book_value->room_id) || ($room_value->adult < $request->adult || $room_value->children < $request->children)) {
                             unset($roomAvailable[$room_key]);
                         }
@@ -184,7 +192,7 @@ class FrontController extends Controller
                 }
             }
         }
-
+        // dd($roomAvailable);
         return view('frontoffice.rooms', [
             'rooms' => $roomAvailable,
             'temp_id' => session('temp_id'),
@@ -299,7 +307,7 @@ class FrontController extends Controller
             'checkin' => 'string|required',
             'checkout' => 'string|required',
             'id' => 'numeric|required',
-            
+
         ]);
 
         $now = Carbon::now();
@@ -417,41 +425,4 @@ class FrontController extends Controller
         ]);
     }
 
-    /* Private Function */
-    private function createTempBooking(Request $request)
-    {
-        // session()->forget('temp_id');
-
-        if (!session()->has('temp_id')) {
-            $temp_id = 'Temp-' . str_shuffle(time()); // random temp_id
-
-            // หาจำนวนคืนที่เข้าพัก
-            $start_date = $request->checkin;
-            $end_date = $request->checkout;
-            $secondsDiff = strtotime($end_date) - strtotime($start_date);
-            $diff_date = $secondsDiff / (60 * 60 * 24);
-
-            $current_date = $request->checkin;
-            $booking_date = "";
-            for ($i = 0; $i < $diff_date; $i++) {
-                $booking_date .= "," . date('Y-m-d', strtotime($current_date));
-                $current_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
-            }
-
-            // dd(session('temp_id'));
-            $TempBooking = new TempBooking();
-            $TempBooking->temp_id = $temp_id;
-            $TempBooking->room_id = $request->id;
-            $TempBooking->ip_address = $request->ip();
-            $TempBooking->date_checkin = date('Y-m-d', strtotime($request->checkin));
-            $TempBooking->date_checkout = date('Y-m-d', strtotime($request->checkout));
-            $TempBooking->booking_date = $booking_date;
-            $TempBooking->days = $diff_date;
-            $TempBooking->booking_type = 'Online';
-            $TempBooking->save();
-
-            session(['temp_id' => $temp_id]);
-            session()->put('tempId_timeout', now()->addMinutes(20));
-        }
-    }
 }
