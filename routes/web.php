@@ -113,15 +113,14 @@ Route::prefix('admin')->group(function () {
             Route::delete('/deleteadmin/{id}', [AdminController::class, 'deleteAdmin']);
 
             /* booking */
-           
+
             Route::post('/updatebookstatus', [BookingController::class, 'updatebookingStatus']);
             Route::get('/bookingone/{id}', [BookingController::class, 'getBookingById']);
             Route::post('/prebooking', [BookingController::class, 'preBooking']);
             Route::delete('/deletebooking/{id}', [BookingController::class, 'deleteBooking']);
             Route::post('/confirmbooking', [BookingController::class, 'createBookOrderAdmin']);
-
-
             Route::post('/bookingcalendar', [BookingController::class, 'bookingCalendar']);
+
         });
     });
 });

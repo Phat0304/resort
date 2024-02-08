@@ -116,6 +116,7 @@ class BackController extends Controller
         if ($user) {
             switch ($page) {
                 case 'settings':
+                    $this->removeTempBooking();
                     return view('backoffice.settings', [
                         'site' => $site_settings,
                         'contact' => $contact_settings,
@@ -124,6 +125,7 @@ class BackController extends Controller
                     break;
 
                 case 'rooms':
+                    $this->removeTempBooking();
 
                     return view('backoffice.rooms', [
 
@@ -135,14 +137,17 @@ class BackController extends Controller
                     break;
 
                 case 'admins':
+                    $this->removeTempBooking();
                     return view('backoffice.admins', ['banks' => $banks, 'admins' => $admins]);
                     break;
 
                 case 'messages':
+                    $this->removeTempBooking();
                     return view('backoffice.messages', ['messages' => $messages]);
                     break;
 
                 case 'features_fac':
+                    $this->removeTempBooking();
                     return view('backoffice.features-fac', [
                         'features' => $features,
                         'facilities' => $facilities,
@@ -150,18 +155,22 @@ class BackController extends Controller
                     break;
 
                 case 'carousel':
+                    $this->removeTempBooking();
                     return view('backoffice.carousel', [
                         'slide_img' => $carousel,
                     ]);
                     break;
 
                 case 'bank':
+                    $this->removeTempBooking();
                     return view('backoffice.bank', [
                         'banks' => $banks,
                     ]);
                     break;
 
                 case 'managebook':
+
+                    $this->removeTempBooking();
                     return view('backoffice.managebook', [
                         'bookings' => $bookings1,
                         'booking_online' => $booking_online,
@@ -170,6 +179,7 @@ class BackController extends Controller
                     ]);
                     break;
                 case 'list_checkin_today':
+                    $this->removeTempBooking();
                     return view('backoffice.list_checkin_today', [
                         'bookings' => $bookings,
                         'list_checkin_today' => $list_checkin_today,
@@ -182,6 +192,7 @@ class BackController extends Controller
                     break;
 
                 case 'list_checkout_today':
+                    $this->removeTempBooking();
                     return view('backoffice.list_checkout_today', [
                         'bookings' => $bookings,
                         'list_checkout_today' => $list_checkout_today,
@@ -194,6 +205,7 @@ class BackController extends Controller
                     break;
 
                 case 'bookinghistory':
+                    $this->removeTempBooking();
                     return view('backoffice.bookinghistory', [
                         'bookings' => $bookinghistory,
                         'booking_online' => $bookinghistory_online,
@@ -203,6 +215,7 @@ class BackController extends Controller
                     break;
 
                 case 'booking':
+                    $this->removeTempBooking();
                     $validator = Validator::make($request->all(), [
                         'checkin' => 'string|required',
                         'checkout' => 'string|required',
@@ -306,6 +319,8 @@ class BackController extends Controller
                         }
                     }
 
+                    $this->removeTempBooking();
+
                     $today = now();
                     $month = $today->month - 1;
                     $year = $today->year;
@@ -319,6 +334,7 @@ class BackController extends Controller
 
                 default:
                     // dd($bookingComplete);
+                    $this->removeTempBooking();
                     return view('backoffice.dashboard', [
                         'allRoom' => $allRoom,
                         'allCustomer' => $allCustomer,

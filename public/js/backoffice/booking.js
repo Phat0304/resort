@@ -30,6 +30,7 @@ function closeModal() {
 
     radios[0].checked = true;
     radios[1].checked = false;
+    window.location.reload();
 }
 
 function setDateSelected(date_checkin) {
@@ -174,14 +175,14 @@ function openCalendarForm(_id) {
             ).innerText = `ห้อง ${room}`;
 
             const dateArrays = data.bookingDate;
-            // ใช้ flatMap เพื่อแยกแต่ละวันที่ใน Array ย่อย
+            // ใช้ flatMap แยกแต่ละวันที่ใน Array ย่อย
             const flattenedDates = dateArrays.flatMap((dateArray) => {
-                const [dateString] = dateArray; // ทำลาย Array ให้เหลือเพียง element เดียว
+                const [dateString] = dateArray; // ทำลาย Array ให้เหลือ element เดียว
                 return dateString.split(",");
             });
             // console.log('dateArrays', dateArrays);
-            console.log("room", room);
-            console.log("flattenedDates1", flattenedDates);
+            // console.log("room", room);
+            // console.log("flattenedDates1", flattenedDates);
 
             const monthSelect = document.getElementById("month");
             const yearInput = document.getElementById("year");
@@ -334,7 +335,7 @@ function confirmBook(event) {
             }, 1000);
         })
         .then(() => {
-            // btn_form_modal.click();
+            btn_form_modal.click();
         })
         .catch(({ response }) => {
             setTimeout(() => {

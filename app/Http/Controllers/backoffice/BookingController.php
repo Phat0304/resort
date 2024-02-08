@@ -156,6 +156,8 @@ class BookingController extends Controller
 
         $isAvailable = $this->checkAvailableRoom($request, $room);
 
+        $this->createTempBooking($request);
+
         $preBook = [
             'ห้อง : ' . $room->name,
             'เช็คอิน : ' . date('d-m-Y', strtotime($request->checkin)),
@@ -198,7 +200,10 @@ class BookingController extends Controller
 
         $room = Room::where(['id' => $request->id])->first();
 
-        $bookings = Booking::where(['room_id' => $request->id])->get();
+        $bookings = Booking::where(['room_id' => $request->id])->where(function ($query) {
+            $query->where('status_id', '!=', 5)
+                ->orWhereNull('status_id');
+        })->get();
 
         $bookingDates = $bookings->map(function ($booking) {
             return explode(', ', $booking->booking_date);
