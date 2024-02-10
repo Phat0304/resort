@@ -39,6 +39,7 @@ Route::get('/rooms', [FrontController::class, 'roomPage'])->name('rooms');
 Route::get('/checkbooktimeout', [UserBookingController::class, 'checkBookTimeout']);
 Route::delete('/deletetempbook/{temp_id}', [UserBookingController::class, 'deleteTempBooking']);
 Route::post('/confirmbooking', [UserBookingController::class, 'createBookOrder']);
+Route::post('/confirmrecaptcha', [UserBookingController::class, 'confirmreCaptcha']);
 
 /* Route middleware users */
 Route::middleware('auth:web')->group(function () {

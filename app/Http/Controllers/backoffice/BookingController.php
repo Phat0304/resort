@@ -307,6 +307,7 @@ class BookingController extends Controller
             File::delete($booking->slip);
         }
 
+        // ทำการลบข้อมูลจากฐานข้อมูล
         $booking->delete();
 
         return response([

@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 mt-lg-0 mt-md-0 mt-4 text-center">
-                            <h5 class="mb-2">฿ {{ $room->price }} / วัน</h5>
+                            <h5 class="mb-2">฿ {{ $room->price }} / คืน</h5>
                             <button onclick="openBookForm({{ $room->id }})"
                                 class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
                                 style="height: 40px; font-size: 18px;">จองห้อง</button>

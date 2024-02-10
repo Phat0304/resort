@@ -65,7 +65,7 @@
                     <td>{{ $booking->cus_phone }}</td>
                     <td style="width: 200px;">
                         <p>ห้อง : {{ $booking->room_name }}</p>
-                        <p>จำนวนวันที่เข้าพัก : {{ $booking->days }} วัน</p>
+                        <p>จำนวนวันที่เข้าพัก : {{ $booking->days }} คืน</p>
                         <p>ราคา/คืน : {{ $booking->price_per_date }} บาท</p>
                         <p>ราคารวม : {{ $booking->price }} บาท</p>
                     </td>
@@ -168,7 +168,7 @@
                     <td>{{ $booking->cus_phone }}</td>
                     <td style="width: 200px;">
                         <p>ห้อง : {{ $booking->room_name }}</p>
-                        <p>จำนวนวันที่เข้าพัก : {{ $booking->days }} วัน</p>
+                        <p>จำนวนวันที่เข้าพัก : {{ $booking->days }} คืน</p>
                         <p>ราคา/คืน : {{ $booking->price_per_date }} บาท</p>
                         <p>ราคารวม : {{ $booking->price }} บาท</p>
                     </td>

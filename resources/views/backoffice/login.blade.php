@@ -61,8 +61,6 @@
                 const message = document.querySelector('.invalid')
                 if (err.response.status === 403) {
                     message.innerText = "บัญชีนี้ถูกปิดใช้งาน";
-                } else if (err.response.status === 404) {
-                    message.innerText = "กรุณาตรวจสอบ reCaptcha";
                 } else {
 
                     message.innerText = "Username หรือ Password ไม่ถูกต้อง";

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserBookingController extends Controller
 {
-   
 
     public function createBookOrder(Request $request)
     {
@@ -31,7 +30,7 @@ class UserBookingController extends Controller
             "checkin" => "string|required",
             "checkout" => "string|required",
             "room_id" => "numeric|required",
-            'g-recaptcha-response' => 'required|captcha', 
+
         ]);
 
         if ($validator->fails()) {
@@ -153,7 +152,6 @@ class UserBookingController extends Controller
         ]);
     }
 
-    
     public function deleteTempBooking(Request $request)
     {
         try {
@@ -177,4 +175,33 @@ class UserBookingController extends Controller
             ], 501);
         }
     }
+
+    public function confirmrecaptcha(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+
+            'g-recaptcha-response' => 'required|captcha',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return response([
+
+                'message' => 'error',
+                'status' => false,
+                'errorMessage' => 'reCAPTCHA',
+            ], 404);
+        }
+
+        return response([
+            'room_id' => $request->bookingURL,
+            'message' => 'ok',
+            'status' => true,
+            'description' => 'reCaptcha has been created successfully.',
+
+        ], 201);
+
+    }
+
 }

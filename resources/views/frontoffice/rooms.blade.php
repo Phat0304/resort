@@ -127,11 +127,16 @@
                                 </div>
                             </div>
                             <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                                <h6 class="mb-4">฿ {{ $room->price }} / วัน</h6>
+                                <h6 class="mb-4">฿ {{ $room->price }} </h6>
 
-                                <button onclick="book({{ $room->id }})" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
-                                    class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">จองห้อง</button>
+                                {{-- <button onclick="book({{ $room->id }})"
+                                    class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">จองห้อง</button> --}}
+
+                                <button onclick="book({{ $room->id }}) " data-bs-toggle="modal"
+                                    data-bs-target="#reCaptcha"
+                                    class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
+                                    style="height: 40px; font-size: 18px;">จองห้อง</button>
+
                                 <button onclick="roomDetails({{ $room->id }})"
                                     class="btn btn-sm w-100 btn-outline-dark shadow-none">ดูรายละเอียด</button>
                             </div>
@@ -139,6 +144,49 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+    </div>
+
+    <!-- Booking form Modal -->
+    <div class="modal fade" id="reCaptcha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form onsubmit="return confirmreCaptcha(event)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ข้อมูลผู้จอง / รายละเอียด</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12 mb-0">
+                            <div class="row">
+                                <p class="invalid text-danger hidden"></p>
+                                <div style="display: flex; align-items: center; justify-content: center;">
+                                    <div class="g-recaptcha" data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button onclick="closeModal()" type="button"
+                            class="btn-close-modal btn bg-secondary text-white shadow-none"
+                            data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="submit"
+                            class="btn btn-confirm custom-bg d-flex align-items-center justify-content-center text-white shadow-none"
+                            style="width: 117px;">
+                            <div class="spinner-border loading d-none" role="status" style="width: 20px; height: 20px;">
+                            </div>
+                            <div class="text-btn-confirm">ยืนยันการจอง</div>
+                        </button>
+                    </div>
+                </div>
+                <input class="bookingURL" type="hidden" name="bookingURL">
+
+
+            </form>
         </div>
     </div>
 @endsection

@@ -88,21 +88,67 @@ function roomDetails(room_id) {
 }
 
 function book(room_id) {
-    
     // const originalScrollPosition = window.scrollY;
+
     const isNullParams = someNullParam;
-    if (isNullParams || !date_checkout.value || !date_checkin.value   ) {
+    if (isNullParams || !date_checkout.value || !date_checkin.value) {
         Swal.fire({
             icon: "info",
             text: "กรุณาเลือกวัน เช็คอิน - เช็คเอ้าท์",
-        })
+        });
         // scrollToTop(originalScrollPosition)
         return false;
     } else {
-        window.location.href = `${bookingDetailsURL}${room_id}`;
+        document.querySelector(".bookingURL").value = room_id;
     }
 }
 
+// function openRecaptcha(room_id) {
+//     console.log("id :", room_id);
+
+//     const isNullParams = someNullParam;
+//     if (isNullParams || !date_checkout.value || !date_checkin.value) {
+//         Swal.fire({
+//             icon: "info",
+//             text: "กรุณาเลือกวัน เช็คอิน - เช็คเอ้าท์",
+//         }).then(() => {
+//             return false;
+//         });
+//     } else {
+//     }
+// }
+
+function closeModal() {
+    window.location.reload();
+}
+
+function confirmreCaptcha(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    console.log("event", event);
+    console.log("form", form);
+    console.log("formData", formData);
+
+    axios
+        .post(`/confirmrecaptcha`, formData)
+        .then(({ data }) => {
+            const room_id = data.room_id;
+            console.log("data", data);
+            console.log("room_id", room_id);
+
+            window.location.href = `${bookingDetailsURL}${room_id}`;
+        })
+        .catch((err) => {
+            const message = document.querySelector(".invalid");
+            if (err.response.status === 404) {
+                message.innerText = "กรุณาตรวจสอบ reCaptcha";
+            }
+        });
+}
+
 function scrollToTop(_position) {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
 }

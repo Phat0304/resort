@@ -177,10 +177,7 @@
                                         มีคนจองไปแล้วเมื่อสักครู่หากคุณชำระเงินไปแล้วกรุณา<span><a
                                                 href="#">ติดต่อเจ้าหน้าที่</a></span>เพื่อขอรับเงินคืน</h6>
 
-                                    <div class="col-8 col-md-12 mb-4">
-                                        <div class="g-recaptcha" style="transform: scale(0.8);"
-                                            data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6"></div>
-                                    </div>
+
 
 
                                     <div class="col-8 col-md-8 mb-4 rounded">

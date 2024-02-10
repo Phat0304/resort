@@ -12,27 +12,24 @@ $(document).ready(function () {
         order: [], // กำหนด order เป็นรายการว่าง
     });
 
-    $("#booking-all_wrapper").removeClass('d-none');
-    $("#booking-online_wrapper").addClass('d-none');
-    $("#booking-walkin_wrapper").addClass('d-none');
+    $("#booking-all_wrapper").removeClass("d-none");
+    $("#booking-online_wrapper").addClass("d-none");
+    $("#booking-walkin_wrapper").addClass("d-none");
 
     $(".select-booking-type").change(function () {
         const type = this.value; //เอาค่าใน value
         if (type === "all") {
-            $("#booking-all_wrapper").removeClass('d-none');
-            $("#booking-online_wrapper").addClass('d-none');
-            $("#booking-walkin_wrapper").addClass('d-none');
-
+            $("#booking-all_wrapper").removeClass("d-none");
+            $("#booking-online_wrapper").addClass("d-none");
+            $("#booking-walkin_wrapper").addClass("d-none");
         } else if (type === "online") {
-            $("#booking-all_wrapper").addClass('d-none');
-            $("#booking-online_wrapper").removeClass('d-none');
-            $("#booking-walkin_wrapper").addClass('d-none');
-
+            $("#booking-all_wrapper").addClass("d-none");
+            $("#booking-online_wrapper").removeClass("d-none");
+            $("#booking-walkin_wrapper").addClass("d-none");
         } else {
-            $("#booking-all_wrapper").addClass('d-none');
-            $("#booking-online_wrapper").addClass('d-none');
-            $("#booking-walkin_wrapper").removeClass('d-none');
-
+            $("#booking-all_wrapper").addClass("d-none");
+            $("#booking-online_wrapper").addClass("d-none");
+            $("#booking-walkin_wrapper").removeClass("d-none");
         }
     });
 });
@@ -41,60 +38,74 @@ $(document).ready(function () {
 
 //วันเช็คอินเช็คเอาท์
 //รายการ checkin หลายรายการ แสดงวันที่ในทุกๆ รายการ
-const checkdeteElements = document.querySelectorAll('.checkdete');
-const createAtElemants = document.querySelectorAll('.createAt');
-
-
-
+const checkdeteElements = document.querySelectorAll(".checkdete");
+const createAtElemants = document.querySelectorAll(".createAt");
 
 // วนลูปผ่านทุก checkdete element เพื่อแปลงวันที่ในทั้งสอง <p> เป็นภาษาไทย
-checkdeteElements.forEach(checkdeteElement => {
+checkdeteElements.forEach((checkdeteElement) => {
     // ดึงข้อความที่มีอยู่ใน <p> เพื่อให้ได้วันที่
-    const checkinText = checkdeteElement.querySelector('p:first-child').innerText;
-    const checkoutText = checkdeteElement.querySelector('p:last-child').innerText;
-
+    const checkinText =
+        checkdeteElement.querySelector("p:first-child").innerText;
+    const checkoutText =
+        checkdeteElement.querySelector("p:last-child").innerText;
 
     // แปลงข้อความวันที่เป็น Date object
     const checkinDate = new Date(checkinText);
     const checkoutDate = new Date(checkoutText);
 
-
     // กำหนดรูปแบบและภาษาที่ต้องการให้แสดง
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedCheckinDate = checkinDate.toLocaleDateString('th-TH', options);
-    const formattedCheckoutDate = checkoutDate.toLocaleDateString('th-TH', options);
-
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
+    const formattedCheckinDate = checkinDate.toLocaleDateString(
+        "th-TH",
+        options
+    );
+    const formattedCheckoutDate = checkoutDate.toLocaleDateString(
+        "th-TH",
+        options
+    );
 
     // แสดงวันที่ในรูปแบบภาษาไทย
-    checkdeteElement.querySelector('p:first-child').innerText = `เช็คอิน : ${formattedCheckinDate}`;
-    checkdeteElement.querySelector('p:last-child').innerText = `เช็คเอาท์ : ${formattedCheckoutDate}`;
-
+    checkdeteElement.querySelector(
+        "p:first-child"
+    ).innerText = `เช็คอิน : ${formattedCheckinDate}`;
+    checkdeteElement.querySelector(
+        "p:last-child"
+    ).innerText = `เช็คเอาท์ : ${formattedCheckoutDate}`;
 });
 
 // วันที่จอง
-createAtElemants.forEach(createAtElement => {
+createAtElemants.forEach((createAtElement) => {
     // ดึงข้อความที่มีอยู่ใน <p> เพื่อให้ได้วันที่
-    const createAtText = createAtElement.querySelector('p:first-child').innerText;
+    const createAtText =
+        createAtElement.querySelector("p:first-child").innerText;
 
     // แปลงข้อความวันที่เป็น Date object
     const createAtDate = new Date(createAtText);
 
     // กำหนดรูปแบบและภาษาที่ต้องการให้แสดง
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedcreateAtDate = createAtDate.toLocaleDateString('th-TH', options);
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
+    const formattedcreateAtDate = createAtDate.toLocaleDateString(
+        "th-TH",
+        options
+    );
 
     // แสดงวันที่ในรูปแบบภาษาไทย
-    createAtElement.querySelector('p:last-child').innerText = `${formattedcreateAtDate}`;
+    createAtElement.querySelector(
+        "p:last-child"
+    ).innerText = `${formattedcreateAtDate}`;
 });
 
-
-
-
-
-
 //---------------------------------------------------------------//
-
-
 
 const formBooking = document.querySelectorAll(".form-booking");
 const btn_modal = document.querySelector(".btn-modal");
@@ -162,11 +173,15 @@ function getBooking(_el, _id) {
 }
 
 function deleteBooking(_el, _id) {
+    console.log("id", _id);
+    console.log("el", _el);
 
     axios
         .delete(`/admin/deletebooking/${_id}`)
         .then(({ data }) => {
             if (data.status) {
+                console.log("data", data.status);
+
                 const row = _el.closest("tr");
                 toastr.success("ลบประวัติการจองสำเร็จ");
 
@@ -180,8 +195,3 @@ function deleteBooking(_el, _id) {
         })
         .catch((err) => console.log(err));
 }
-
-
-
-
-

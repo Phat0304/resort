@@ -160,7 +160,7 @@ class Controller extends BaseController
             $TempBooking->date_checkout = date('Y-m-d', strtotime($request->checkout));
             $TempBooking->booking_date = $booking_date;
             $TempBooking->days = $diff_date;
-            $TempBooking->booking_type = 'Online';
+            $TempBooking->booking_type = '';
             $TempBooking->save();
 
             session(['temp_id' => $temp_id]);
