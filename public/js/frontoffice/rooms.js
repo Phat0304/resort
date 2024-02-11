@@ -88,35 +88,19 @@ function roomDetails(room_id) {
 }
 
 function book(room_id) {
+    const btnModalReCap = document.getElementById("recap-modal");
     // const originalScrollPosition = window.scrollY;
-
     const isNullParams = someNullParam;
     if (isNullParams || !date_checkout.value || !date_checkin.value) {
         Swal.fire({
             icon: "info",
             text: "กรุณาเลือกวัน เช็คอิน - เช็คเอ้าท์",
         });
-        // scrollToTop(originalScrollPosition)
-        return false;
     } else {
+        btnModalReCap.click();
         document.querySelector(".bookingURL").value = room_id;
     }
 }
-
-// function openRecaptcha(room_id) {
-//     console.log("id :", room_id);
-
-//     const isNullParams = someNullParam;
-//     if (isNullParams || !date_checkout.value || !date_checkin.value) {
-//         Swal.fire({
-//             icon: "info",
-//             text: "กรุณาเลือกวัน เช็คอิน - เช็คเอ้าท์",
-//         }).then(() => {
-//             return false;
-//         });
-//     } else {
-//     }
-// }
 
 function closeModal() {
     window.location.reload();

@@ -132,10 +132,13 @@
                                 {{-- <button onclick="book({{ $room->id }})"
                                     class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">จองห้อง</button> --}}
 
-                                <button onclick="book({{ $room->id }}) " data-bs-toggle="modal"
-                                    data-bs-target="#reCaptcha"
+
+
+                                <button onclick="book({{ $room->id }})"
                                     class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2"
                                     style="height: 40px; font-size: 18px;">จองห้อง</button>
+                                <button id="recap-modal" data-bs-toggle="modal" data-bs-target="#reCaptcha"
+                                    class="d-none btn btn-sm w-100 text-white custom-bg shadow-none mb-2"></button>
 
                                 <button onclick="roomDetails({{ $room->id }})"
                                     class="btn btn-sm w-100 btn-outline-dark shadow-none">ดูรายละเอียด</button>
@@ -146,6 +149,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!-- Booking form Modal -->
     <div class="modal fade" id="reCaptcha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -179,7 +184,7 @@
                             style="width: 117px;">
                             <div class="spinner-border loading d-none" role="status" style="width: 20px; height: 20px;">
                             </div>
-                            <div class="text-btn-confirm">ยืนยันการจอง</div>
+                            <div class="text-btn-confirm">ยืนยัน</div>
                         </button>
                     </div>
                 </div>
