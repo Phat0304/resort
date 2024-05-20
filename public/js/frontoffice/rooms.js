@@ -119,8 +119,10 @@ function confirmreCaptcha(event) {
     axios
         .post(`/confirmrecaptcha`, formData)
         .then(({ data }) => {
-            const room_id = data.room_id;
             console.log("data", data);
+
+            const room_id = data.room_id;
+
             console.log("room_id", room_id);
 
             window.location.href = `${bookingDetailsURL}${room_id}`;

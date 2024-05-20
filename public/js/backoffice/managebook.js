@@ -1,14 +1,17 @@
 // new DataTable("#bookings");
 $(document).ready(function () {
     $("#booking-all").DataTable({
+        pageLength: -1,
         order: [], // กำหนด order เป็นรายการว่าง
     });
 
     $("#booking-online").DataTable({
+        pageLength: -1,
         order: [], // กำหนด order เป็นรายการว่าง
     });
 
     $("#booking-walkin").DataTable({
+        pageLength: -1,
         order: [], // กำหนด order เป็นรายการว่าง
     });
 

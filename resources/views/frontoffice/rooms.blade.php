@@ -166,7 +166,7 @@
                             <div class="row">
                                 <p class="invalid text-danger hidden"></p>
                                 <div style="display: flex; align-items: center; justify-content: center;">
-                                    <div class="g-recaptcha" data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6">
+                                    <div class="g-recaptcha" data-sitekey="6Ld4nnspAAAAAAlI4h13-v8_I5tpZeUo4Y2DrVZa">
                                     </div>
                                 </div>
 

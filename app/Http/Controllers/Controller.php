@@ -124,9 +124,9 @@ class Controller extends BaseController
 
     public function removeTempBooking()
     {
-        if (session()->has('temp_id')) {
-            TempBooking::where('temp_id', session('temp_id'))->delete();
-            session()->forget('temp_id');
+        if (session()->has('temp_id')) { //ตรวจสอบ temp_id อยู่ใน session นี้มั้ย
+            TempBooking::where('temp_id', session('temp_id'))->delete(); //ลบ temp_id ที่ตรงกัน
+            session()->forget('temp_id'); //ลบ temp_id ออกจาก session
         }
     }
 
@@ -135,7 +135,7 @@ class Controller extends BaseController
     {
         // session()->forget('temp_id');
 
-        if (!session()->has('temp_id')) {
+        if (!session()->has('temp_id')) { //ตรวจสอบ  temp_id
             $temp_id = 'Temp-' . str_shuffle(time()); // random temp_id
 
             // หาจำนวนคืนที่เข้าพัก
@@ -165,6 +165,7 @@ class Controller extends BaseController
 
             session(['temp_id' => $temp_id]);
             session()->put('tempId_timeout', now()->addMinutes(20));
+
         }
     }
 }

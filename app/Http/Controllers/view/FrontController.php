@@ -311,7 +311,7 @@ class FrontController extends Controller
         ]);
 
         $now = Carbon::now();
-        $tempLimit = $now->subMinutes(16);
+        $tempLimit = $now->subMinutes(16); // ลบ 16 นาที
         $tempBooking = TempBooking::where('created_at', '>', $tempLimit)->where('room_id', $request->id)->get(); // temp booking ที่ล็อกไว้ให้ชำละเงิน
 
         if ((count($tempBooking) > 0 && !session()->has('temp_id'))) {

@@ -139,8 +139,9 @@
                             </div>
                             <div class="col-7 mb-3">
                                 <label class="form-label">เลขที่บัญชี</label>
-                                <input type="text" name="account_number" id="account-number" placeholder="123-4-56789-0"
-                                    class="form-title form-control shadow-none text-center" required>
+                                <input type="text" name="account_number" id="account-number"
+                                    placeholder="123-4-56789-0" class="form-title form-control shadow-none text-center"
+                                    required>
                             </div>
                             <div class="col-5 mb-3">
                                 <label class="form-label">ลำดับความสำคัญ</label>
@@ -178,8 +179,8 @@
                                     <figure class="image-upload shadow bg-white">
                                         <input onchange="previewImg(1)" class="img-input" id="file1" type="file"
                                             name="image" id="image" accept="image/jpeg, image/png, image/jpg">
-                                        <img class="" src="/images/istockphoto.jpg" id="preview-img" alt=""
-                                            style="width: 100%;">
+                                        <img class="" src="/images/istockphoto.jpg" id="preview-img"
+                                            alt="" style="width: 100%;">
                                     </figure>
                                 </div>
                             </div>
@@ -230,8 +231,9 @@
                             </div>
                             <div class="col-7 mb-3">
                                 <label class="form-label">เลขที่บัญชี</label>
-                                <input type="text" name="account_number" id="account-number" placeholder="123-4-56789-0"
-                                    class="form-title form-control shadow-none text-center" required>
+                                <input type="text" name="account_number" id="account-number"
+                                    placeholder="123-4-56789-0" class="form-title form-control shadow-none text-center"
+                                    required>
                             </div>
                             <div class="col-5 mb-3">
                                 <label class="form-label">ลำดับความสำคัญ</label>
@@ -253,7 +255,6 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('script')

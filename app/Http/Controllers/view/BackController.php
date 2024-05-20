@@ -73,7 +73,7 @@ class BackController extends Controller
         $statuses = BookingStatus::orderBy('id', 'ASC')->get();
 
         /* list_checkin_today page */
-        $bookings = Booking::join('booking_statuses AS bs', 'bs.id', 'bookings.status_id')
+        $bookings2 = Booking::join('booking_statuses AS bs', 'bs.id', 'bookings.status_id')
             ->join('rooms', 'rooms.id', 'bookings.room_id')
             ->select('bookings.*', 'rooms.name AS room_name', 'bs.name AS status_name', 'bs.bg_color AS bg_color')
             ->whereIn('bookings.status_id', [2, 3, 4])
@@ -181,10 +181,10 @@ class BackController extends Controller
                 case 'list_checkin_today':
                     $this->removeTempBooking();
                     return view('backoffice.list_checkin_today', [
-                        'bookings' => $bookings,
+                        'bookings' => $bookings2,
                         'list_checkin_today' => $list_checkin_today,
-                        'booking_online' => $booking_online,
-                        'booking_walkin' => $booking_walkin,
+                        // 'booking_online' => $booking_online,
+                        // 'booking_walkin' => $booking_walkin,
                         'statuses' => $statuses,
                         'today' => $today,
 
@@ -194,10 +194,10 @@ class BackController extends Controller
                 case 'list_checkout_today':
                     $this->removeTempBooking();
                     return view('backoffice.list_checkout_today', [
-                        'bookings' => $bookings,
+                        'bookings' => $bookings2,
                         'list_checkout_today' => $list_checkout_today,
-                        'booking_online' => $booking_online,
-                        'booking_walkin' => $booking_walkin,
+                        // 'booking_online' => $booking_online,
+                        // 'booking_walkin' => $booking_walkin,
                         'statuses' => $statuses,
                         'today' => $today,
 
@@ -333,7 +333,7 @@ class BackController extends Controller
                     break;
 
                 default:
-                    // dd($bookingComplete);
+
                     $this->removeTempBooking();
                     return view('backoffice.dashboard', [
                         'allRoom' => $allRoom,

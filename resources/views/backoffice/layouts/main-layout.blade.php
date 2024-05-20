@@ -24,11 +24,11 @@
                             class="bi bi-house-door" style="font-size: 18px;"></i> <span
                             style="font-size: 15px;">แผงควบคุม</span></a></li>
 
-              
 
 
-                            
-        
+
+
+
 
 
 
@@ -44,19 +44,19 @@
                         </div>
                     </a>
                     <div class="collapse show" id="bookingLinks" style="padding-left: 1.5rem;">
-                        
+
                         <ul class="nav flex-column">
-                            
-                <li class="list_checkin_today"><a href="javascript:getPage('list_checkin_today')"
-                    class="text-decoration-none px-3 py-2 d-block"><i class="bi bi-house-up"
-                        style="font-size: 18px;"></i><span style="font-size: 15px;">
-                        รายการเช็คอิน</span></a></li>
+
+                            <li class="list_checkin_today"><a href="javascript:getPage('list_checkin_today')"
+                                    class="text-decoration-none px-3 py-2 d-block"><i class="bi bi-house-up"
+                                        style="font-size: 18px;"></i><span style="font-size: 15px;">
+                                        รายการเช็คอิน</span></a></li>
 
 
-                        <li class="list_checkout_today"><a href="javascript:getPage('list_checkout_today')"
-                            class="text-decoration-none px-3 py-2 d-block"><i class="bi bi-house-dash"
-                                style="font-size: 18px;"></i><span style="font-size: 15px;">
-                                รายการเช็คเอาท์</span></a></li>
+                            <li class="list_checkout_today"><a href="javascript:getPage('list_checkout_today')"
+                                    class="text-decoration-none px-3 py-2 d-block"><i class="bi bi-house-dash"
+                                        style="font-size: 18px;"></i><span style="font-size: 15px;">
+                                        รายการเช็คเอาท์</span></a></li>
 
 
                             <li class="managebook">
@@ -205,7 +205,7 @@
         const params = new URLSearchParams(queryString);
         const paramValue = params.get('page');
         const toggle_collapse = document.querySelector('.toggle-collapse');
-        
+
         const caret_icon = document.querySelector('.caret-icon');
 
         caret_icon.classList.add('active')
@@ -221,7 +221,7 @@
         }
 
 
-      
+
 
 
         function collapseShow() {
@@ -244,7 +244,7 @@
                 caret_icon.classList.remove('active')
 
             }
-            
+
         }
 
         function activeMenu() {
@@ -273,8 +273,6 @@
                 window.location.href = `/admin`
             }
         }
-
-        
     </script>
 
     @yield('script')

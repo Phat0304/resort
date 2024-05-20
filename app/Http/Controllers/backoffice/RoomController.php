@@ -67,6 +67,7 @@ class RoomController extends Controller
     public function getRoomById(Request $request, $id)
     {
         try {
+
             $room = Room::where(['id' => $id])->get()->first();
 
             $feature_ids = explode(', ', $room->feature_ids);
@@ -294,6 +295,7 @@ class RoomController extends Controller
 
     public function deleteGallery($id)
     {
+
         $gal = Gallery::where('id', $id)->first();
 
         /* Delete file. */

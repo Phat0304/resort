@@ -93,7 +93,7 @@ class UserBookingController extends Controller
             $order->slip = $slip_image;
             $order->save();
 
-            $this->sendLineNotify($order, $room); //ส่งข้อความไปไลน์
+            // $this->sendLineNotify($order, $room); //ส่งข้อความไปไลน์
             $this->removeTempBooking();
 
             DB::commit();

@@ -35,6 +35,8 @@ Route::get('/roomdetails', [FrontController::class, 'roomDetailsPage'])->name('r
 Route::get('/bookingdetails', [FrontController::class, 'bookingDetailsPage'])->name('booking-details');
 Route::get('/rooms', [FrontController::class, 'roomPage'])->name('rooms');
 
+Route::post('/leavemessage', [LeaveMessageController::class, 'createMessage']);
+
 /* Controllers */
 Route::get('/checkbooktimeout', [UserBookingController::class, 'checkBookTimeout']);
 Route::delete('/deletetempbook/{temp_id}', [UserBookingController::class, 'deleteTempBooking']);
@@ -70,7 +72,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/carousel/update', [CarouselController::class, 'update']);
             Route::delete('/carousel/delete', [CarouselController::class, 'delete']);
 
-            Route::post('/leavemessage', [LeaveMessageController::class, 'createMessage']);
             Route::get('/messageone/{msg_id}', [LeaveMessageController::class, 'getMessageById']);
             Route::delete('/message/delete/{msg_id}', [LeaveMessageController::class, 'deleteMessage']);
 

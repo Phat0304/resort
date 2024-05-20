@@ -2,7 +2,8 @@
 Chart.defaults.global.defaultFontFamily = "Kanit";
 Chart.defaults.global.defaultFontColor = "#858796";
 
-function number_format(number, decimals, dec_point, thousands_sep) { //ไม่ได้เขียน
+function number_format(number, decimals, dec_point, thousands_sep) {
+    //ไม่ได้เขียน
     // *     example: number_format(1234.56, 2, ',', ' ');
     // *     return: '1 234,56'
     number = (number + "").replace(",", "").replace(" ", "");
@@ -36,6 +37,7 @@ const bookingsData = JSON.parse(
 const bookingCompleteAll = JSON.parse(
     document.getElementById("data").getAttribute("bookingCompleteAll")
 );
+console.log("booking", bookingCompleteAll);
 const mouthNumbers = [
     "01",
     "02",
@@ -58,11 +60,14 @@ let pie2 = document.getElementById("pieChartMonth");
 
 let roomSet1 = new Array(),
     roomSet2 = new Array();
+
+//id ห้อง
 roomsData.forEach((room, ind) => {
     roomSet1[room.id] = 0;
     roomSet2[room.id] = 0;
 });
 
+//จำนวนการเข้าพักแต่ละห้อง
 roomSet1.forEach((room, room_ind) => {
     bookingCompleteAll.forEach((book, book_ind) => {
         if (book.room_id === room_ind) {
@@ -71,6 +76,7 @@ roomSet1.forEach((room, room_ind) => {
     });
 });
 
+//รวมราคาเข้าพักของห้องนั้นๆ
 roomSet2.forEach((room, room_ind) => {
     bookingCompleteAll.forEach((book, book_ind) => {
         if (book.room_id === room_ind) {
@@ -84,6 +90,7 @@ let barDatasets1 = roomsData.map((room) => {
         label: `${room.name}`,
         data: mouthNumbers.map((month, ind) => {
             let tt = 0;
+
             for (let book of bookingsData) {
                 if (
                     room.id === book.room_id &&
@@ -105,6 +112,7 @@ let barDatasets2 = roomsData.map((room) => {
         label: `${room.name}`,
         data: mouthNumbers.map((month, ind) => {
             let tt = 0;
+            console.log("tt", tt);
             for (let book of bookingsData) {
                 if (
                     room.id === book.room_id &&
@@ -222,6 +230,8 @@ let barChart1 = new Chart(bar1, {
     },
 });
 
+console.log("bar2 ", bar2);
+
 let barChart2 = new Chart(bar2, {
     type: "bar",
     data: {
@@ -306,7 +316,7 @@ let barChart2 = new Chart(bar2, {
         },
     },
 });
-
+console.log("barChart2 ", barChart2);
 pieChartArea(pie1, labelRooms, pieDatasets1, pieBgColor, " ครั้ง");
 pieChartArea(pie2, labelRooms, pieDatasets2, pieBgColor, " บาท");
 
@@ -346,7 +356,13 @@ function pieChartArea(pieId, labelRooms, pieDatasets, pieBgColor, unit) {
                         let value = dataset.data[tooltipItem.index];
                         let percentage = ((value / total) * 100).toFixed(2);
                         return (
-                            data.labels[tooltipItem.index] + " : " + value + unit + " (" + percentage + "%)"
+                            data.labels[tooltipItem.index] +
+                            " : " +
+                            value +
+                            unit +
+                            " (" +
+                            percentage +
+                            "%)"
                         );
                     },
                 },

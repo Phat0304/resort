@@ -12,7 +12,7 @@
         <!-- Rooms section -->
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between ">
                     <h5 class="card-title m-0 mb-4">
                         #ห้องทั้งหมด
                     </h5>
@@ -291,6 +291,9 @@
                         <h5 class="modal-title m-title" id="m-title"></h5>
                     </div>
                     <div class="modal-body">
+
+
+
                         <div class="row d-flex justify-content-center">
                             <div class="col-6 d-flex flex-column justify-content-center">
                                 <div class="group-image mb-3">
@@ -307,6 +310,8 @@
                                     style="">เพิ่มรูปภาพ</button>
                             </div>
                         </div>
+
+
 
                         <div class="" style="max-height: 500px; overflow: auto;">
                             <table class="table">

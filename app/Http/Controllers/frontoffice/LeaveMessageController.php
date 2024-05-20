@@ -20,8 +20,7 @@ class LeaveMessageController extends Controller
             'g-recaptcha-response' => 'required|captcha', // เพิ่มตรวจสอบ reCAPTCHA response
         ]);
 
-        if ($validator->fails()|| empty($request->input('g-recaptcha-response'))) {
-            
+        if ($validator->fails()) {
 
             return response([
                 'message' => 'error',
@@ -51,7 +50,7 @@ class LeaveMessageController extends Controller
             return response([
                 'message' => 'error',
                 'status' => false,
-                'errorMessage' => $e->getMessage()
+                'errorMessage' => $e->getMessage(),
             ], 500);
         }
     }

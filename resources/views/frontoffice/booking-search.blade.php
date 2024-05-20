@@ -5,8 +5,6 @@
 @endsection
 
 @section('content')
-    
-
     <div class="container my-5 bg-white shadow rounded" style="">
         <div class="row">
             <div class="col-12 p-4">
@@ -33,7 +31,7 @@
                                 onKeyPress="if(this.value.length>=4) return false;" minlength="4" required>
                         </div>
 
-                        
+
                         <div class="col-lg-1 col-md-1 mt-3 text-center">
                             <button type="submit" class="btn text-white shadow-none custom-bg">ค้นหา</button>
                         </div>
@@ -65,14 +63,7 @@
                             <h6 class="">ราคา : {{ $book->price }} บาท</h6>
                             <h6 class="mb-4">หมายเหตุ : {{ $book->note }} </h6>
 
-                            <div class="d-flex justify-content-center gap-2 mb-2">
-                                <a href="{{ $contactUs->line }}">
-                                    <img src="/images/icons/line.png" width=40>
-                                </a>
-                                <a href="{{ $contactUs->phone1 }}">
-                                    <img src="/images/icons/telephone-call.png" width=40>
-                                </a>
-                            </div>
+
                         </div>
                     </div>
                 </div>

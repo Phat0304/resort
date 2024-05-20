@@ -79,7 +79,9 @@
                             <div class="col-lg-6 col-12">
                                 <div class="mt-3">
                                     <label class="form-label" style="font-weight: 500;">เบอร์โทร</label>
-                                    <input name="phone" type="number" class="form-control shadow-none" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onKeyPress="if(this.value.length>=10) return false;" required>
+                                    <input name="phone" type="number" class="form-control shadow-none"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                        onKeyPress="if(this.value.length>=10) return false;" required>
                                 </div>
                             </div>
                         </div>
@@ -93,11 +95,13 @@
                         </div>
 
                         <div>
-                    
-                            <div class="g-recaptcha" data-sitekey="6Ld181gpAAAAAOEb3gPA2zsZw5goon4j7E5_rLO6"></div>
+                            <p class="invalid text-danger hidden"></p>
+                            <div class="g-recaptcha" data-sitekey="6Ld4nnspAAAAAAlI4h13-v8_I5tpZeUo4Y2DrVZa"></div>
                         </div>
 
-                        
+                        {{-- 6LdQ6m4pAAAAAMYSUaAp0M5pW-vWK6f7KupKviX3 --}}
+
+
                         <button class="btn text-white shadow-none custom-bg mt-3" type="submit">ส่งข้อความ</button>
                         <input id="btn-reset" type="reset" style="display: none">
                     </form>
@@ -114,18 +118,28 @@
         function onSend(event) {
             event.preventDefault();
 
+
+
             const form = event.target;
             const formData = new FormData(form);
-
-            axios.post('/admin/leavemessage', formData).then(({
+            axios.post(`/leavemessage`, formData).then(({
                 data
             }) => {
                 if (data.status) {
                     btn_reset.click();
                     toastr.success('ส่งข้อความสำเร็จ');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 }
             }).catch(err => {
-                toastr.error('error');
+                const message = document.querySelector('.invalid')
+
+                if (err.response.status === 404) {
+                    message.innerText = "กรุณาตรวจสอบ reCaptcha";
+                } else {
+                    toastr.error('error');
+                }
             })
 
         }

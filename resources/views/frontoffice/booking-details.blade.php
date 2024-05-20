@@ -180,7 +180,7 @@
 
 
 
-                                    <div class="col-8 col-md-8 mb-4 rounded">
+                                    <div class="col-8 col-md-8 mb-2 rounded">
                                         <div class="d-flex justify-content-evenly">
                                             <button type="submit"
                                                 class="btn-sm text-white btn-confirm custom-bg w-100 fs-4 border-none d-flex justify-content-center align-items-center"
@@ -188,6 +188,12 @@
                                                 <div class="spinner-border loading d-none" role="status"></div>
                                                 <span class="text-btn-confirm fs-md-5 fs-lg-4">ยืนยันการจอง</span>
                                             </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 col-md-8 mb-4 rounded">
+                                        <div class="d-flex justify-content-evenly">
+                                            <button onclick="cancelBooking()" class="w-100 text-dark  rounded"
+                                                style="height: 45px; background-color: rgb(252, 95, 95); font-size: 25px;">ยกเลิก</button>
                                         </div>
                                     </div>
                                 </div>
@@ -213,19 +219,9 @@
     <script src="/js/preview-img.js"></script>
 
     <script>
-        // window.onload = () => {
-        //     localStorage.clear();
-        // }
-
-
         const minute_local = localStorage.minute;
         const second_local = localStorage.second;
         const isAvailable = @json($isAvailable); // from laravel controller
-
-
-
-
-
 
 
 
@@ -263,7 +259,7 @@
             }
             if (minutes <= 0 && seconds <= 0) {
                 clearInterval(interval);
-                localStorage.removeItem('minute');
+                localStorage.removeItem('minute'); //ข้อมูล
                 localStorage.removeItem('second');
                 console.log('clear')
                 show_minute.innerText = '00';
@@ -370,6 +366,10 @@
                 }, 500);
             })
             // return;
+        }
+
+        function cancelBooking() {
+            window.location.href = '/rooms';
         }
     </script>
 @endsection

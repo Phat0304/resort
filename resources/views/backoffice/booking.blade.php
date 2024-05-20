@@ -10,7 +10,7 @@
         <i class="bi bi-building-fill-check fs-3 me-2"></i>
         <h3 class="">จองห้องแบบ Walk-in</h3>
     </div>
-
+    <input type="text" name="test" id="test">
 
     <div class="row">
         <div class="col-lg-4 col-md-12 mb-lg-0 mb-4 px-lg-rounded">
